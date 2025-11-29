@@ -21,6 +21,23 @@ def index():
     return render_template('cookbook/index.html', recipes=recipes)
 
 
+#: Single read. My first own function
+@bp.route('/<int:id>/read')
+def read(id):
+    db = get_db()
+    recipe = db.execute(
+        'SELECT c.id, d_name, body, c_rule, author_id, username'
+        '   FROM cookbook c JOIN user u ON c.author_id = u.id'
+        '   WHERE c.id = ?',
+        (id,)
+    ).fetchone()
+
+    if recipe is None:
+        abort(404, f"Recipe id {id} dosen`t exist.")
+
+    return render_template('cookbook/read.html', recipe=recipe)
+
+
 #: "CREATE" function
 @bp.route('/create', methods=('GET', 'POST'))
 #: call wrap from auth, wrap check is user loged in

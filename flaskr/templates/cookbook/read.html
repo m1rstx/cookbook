@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Recipe{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('cookbook.create') }}">New</a>
+    {% if g.user['id'] == recipe['author_id'] %}
+        <a class="action" href="{{ url_for('cookbook.update', id=recipe['id']) }}">Edit</a>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+    <article class="recipe">
+      <header>
+        <div>
+          <h1>{{ recipe['d_name'] }}</h1>
+          <div class="about">by {{ recipe['username'] }}</div>
+        </div>
+      </header>
+      <p class="body">{{ recipe['body'] }}</p>
+      <p class="c_rule">{{ recipe['c_rule'] }}</p>
+    </article>
+{% endblock %}
