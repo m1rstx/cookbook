@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS cookbook;
+
+CREATE TABLE user (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+);
+
+CREATE TABLE cookbook (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    author_id INTEGER NOT NULL,
+    d_name TEXT UNIQUE NOT NULL,
+    body TEXT NOT NULL,
+    c_rule TEXT NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES user (id)
+);

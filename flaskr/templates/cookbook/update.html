@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit "{{ recipe['d_name'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="d_name">Dish name</label>
+    <input name="d_name" id="d_name"
+      value="{{ request.form['d_name'] or recipe['d_name'] }}" required>
+    <label for="body">Body</label>
+    <textarea name="body" id="body">{{ request.form['body'] or recipe['body'] }}</textarea>
+    <label for="c_rule">Cooking rule</label>
+    <textarea name="c_rule" id="c_rule">{{ request.form['c_rule'] or recipe['c_rule'] }}</textarea>
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('cookbook.delete', id=recipe['id']) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+{% endblock %}
